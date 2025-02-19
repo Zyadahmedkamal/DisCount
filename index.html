@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الخصم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            text-align: center;
+            margin: 50px;
+            direction: rtl;
+            background-color: #f8f9fa;
+        }
+
+        .name {
+            font-size: 40px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            font-size: 18px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="name">زياد أحمد</div>
+
+    <h2>حساب الخصم</h2>
+
+    <input type="number" id="totalPrice" placeholder="إجمالي السعر">
+    <br>
+    <input type="number" id="discount" placeholder="نسبة الخصم %">
+    <br>
+    <button onclick="calculateDiscount()">احسب</button>
+
+    <div class="result" id="result"></div>
+    <div class="error" id="error"></div>
+
+    <script>
+        function calculateDiscount() {
+            let totalPrice = parseFloat(document.getElementById("totalPrice").value);
+            let discount = parseFloat(document.getElementById("discount").value);
+            let errorDiv = document.getElementById("error");
+            let resultDiv = document.getElementById("result");
+
+            // مسح أي رسالة خطأ سابقة
+            errorDiv.innerHTML = "";
+            resultDiv.innerHTML = "";
+
+            // التحقق من الإدخالات
+            if (isNaN(totalPrice) || isNaN(discount)) {
+                errorDiv.innerHTML = "❌ يرجى إدخال قيم صحيحة.";
+                return;
+            }
+
+            if (totalPrice < 0 || discount < 0) {
+                errorDiv.innerHTML = "❌ القيم لا يمكن أن تكون سالبة!";
+                return;
+            }
+
+            if (discount > 100) {
+                errorDiv.innerHTML = "❌ نسبة الخصم لا يمكن أن تكون أكثر من 100%!";
+                return;
+            }
+
+            let discountAmount = (totalPrice * discount) / 100;
+            let finalPrice = totalPrice - discountAmount;
+
+            resultDiv.innerHTML = 
+                `✔️ قيمة الخصم: ${discountAmount.toFixed(2)} جنيه <br>
+                💰 السعر بعد الخصم: ${finalPrice.toFixed(2)} جنيه`;
+        }
+    </script>
+
+</body>
+</html>
